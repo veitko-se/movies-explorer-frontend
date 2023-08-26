@@ -1,0 +1,27 @@
+.page {
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Inter', 'Arial', sans-serif;
+  color: #FFFFFF;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  min-width: 288px;
+  height: 100vh;
+}
+
+.link-hover-effect, .button-hover-effect {
+  transition: opacity .4s ease-out;
+}
+
+.link-hover-effect:hover {
+  opacity: 0.7;
+}
+
+.button-hover-effect:hover {
+  opacity: 0.8;
+}
