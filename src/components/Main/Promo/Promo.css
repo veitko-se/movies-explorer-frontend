@@ -42,21 +42,15 @@
   display: block;
   margin: 0;
   padding: 9px 19px;
-  text-decoration: none;
   border-radius: 3px;
   border: 1px solid rgba(255, 255, 255, .6000000238418579);
   background-color: transparent;
-  color: #FFF;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
   max-width: 129px;
   text-align: center;
   box-sizing: border-box;
-}
-
-.about-me__link:visited {
-  color: #FFF;
 }
 
 @media screen and (max-width: 1023.98px) {

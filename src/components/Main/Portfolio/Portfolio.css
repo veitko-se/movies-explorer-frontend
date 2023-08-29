@@ -41,17 +41,11 @@
 }
 
 .portfolio__item-link {
-  color: #FFF;
-  text-decoration: none;
   margin: 0;
   padding: 20px 0 9px;
   font-size: 30px;
   line-height: 60px;
   letter-spacing: -1.2px;
-}
-
-.portfolio__item-link:visited {
-  color: #FFF;
 }
 
 @media screen and (max-width: 1023.98px) {

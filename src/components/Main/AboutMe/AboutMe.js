@@ -12,7 +12,7 @@ function AboutMe() {
         <p className="about-me__text">Я родилась в Ставрополе, в СКФУ закончила прикладную информатику в экономике. В настоящее время живу в Москве. Замужем.
           Люблю животных и путешествия. С&nbsp;2017 года работаю инженером в ГБУЗ «МИАЦ ЯНАО», с 2014 года подрабатываю в&nbsp;операторе связи.
           Недавно увлеклась веб-разработкой и поступила на курс от&nbsp;Яндекс.Практикума.</p>
-        <a href="https://github.com/veitko-se" className="about-me__link link-hover-effect" target="_blank" rel="noopener noreferrer">Github</a>
+        <a href="https://github.com/veitko-se" className="about-me__link link" target="_blank" rel="noopener noreferrer">Github</a>
         <img src={photo} alt="Мое фото" className="about-me__photo" />
       </div>
       <Portfolio />

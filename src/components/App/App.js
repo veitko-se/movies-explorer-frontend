@@ -7,17 +7,27 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import Menu from '../Menu/Menu';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function handleBurgerMenuClick() {
+    setIsMenuOpen(true);
+  };
+
+  function handleCloseMenuClick() {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="page">
-      <Header />
+      <Menu isMenuOpen={isMenuOpen} handleCloseMenuClick={handleCloseMenuClick}/>
+      <Header loggedIn={loggedIn} handleBurgerMenuClick={handleBurgerMenuClick} />
       <Routes>
         <Route path="*" element={<Navigate to="/signin"/>}/>
-        <Route path="/" element={
-          <Main loggedIn={loggedIn}/>
-        } />
+        <Route path="/" element={<Main />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />
       </Routes>

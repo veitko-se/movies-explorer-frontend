@@ -7,38 +7,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 70px 15px;
+  padding: 15px 70px;
   margin: auto;
 }
 
 .header__logo {
   max-width: 38px;
   aspect-ratio: 1/1;
+  margin-top: 3px;
 }
 
-.header__nav-block {
-  margin: 3px 0 ;
-  padding: 0;
-  align-self: baseline;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-  gap: 30px;
+.header__menu {
+  margin: 6px 0 ;
 }
 
 .header__signup-btn {
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-  color: #FFFFFF;
-  background-color: transparent;
-  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
 }
 
 .header__signin-btn {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
   text-decoration: none;
   color: #000;
   background-color: #3DDC84;
@@ -49,22 +41,12 @@
 
 @media screen and (max-width: 1023.98px) {
   .header__content {
-    padding: 18px 30px 15px;
+    padding: 15px 30px;
   }
 }
 
 @media screen and (max-width: 449.98px) {
   .header__content {
-    padding: 18px 14px 12px;
-  }
-
-  .header__nav-block {
-    gap: 14px;
-    font-size: 10px;
-    margin: 6px 0 ;
-  }
-
-  .header__signin-btn {
-    padding: 5px 12px;
+    padding: 15px 14px 12px;
   }
 }
