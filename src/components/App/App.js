@@ -7,7 +7,8 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import Menu from '../Menu/Menu';
+import SideMenu from '../SideMenu/SideMenu';
+import Page404 from '../Page404/Page404';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -23,13 +24,14 @@ function App() {
 
   return (
     <div className="page">
-      <Menu isMenuOpen={isMenuOpen} handleCloseMenuClick={handleCloseMenuClick}/>
+      <SideMenu isMenuOpen={isMenuOpen} handleCloseMenuClick={handleCloseMenuClick}/>
       <Header loggedIn={loggedIn} handleBurgerMenuClick={handleBurgerMenuClick} />
       <Routes>
-        <Route path="*" element={<Navigate to="/signin"/>}/>
+        <Route path="*" element={<Navigate to="/404" replace/>}/>
         <Route path="/" element={<Main />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />
+        <Route path="/404" element={<Page404 />} />
       </Routes>
       <Footer />
     </div>

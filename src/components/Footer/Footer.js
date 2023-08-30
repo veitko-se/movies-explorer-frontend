@@ -1,6 +1,11 @@
 import './Footer.css';
+import { useLocation } from "react-router-dom";
 
 function Footer() {
+
+  const { pathname } = useLocation();
+  if (pathname === "/404") return null;
+
   return (
     <section className="footer">
       <p className="footer__text">Учебный проект Яндекс.Практикум х BeatFilm.</p>

@@ -17,10 +17,6 @@
   margin-top: 3px;
 }
 
-.header__menu {
-  margin: 6px 0 ;
-}
-
 .header__signup-btn {
   font-size: 12px;
   font-weight: 500;
@@ -48,5 +44,9 @@
 @media screen and (max-width: 449.98px) {
   .header__content {
     padding: 15px 14px 12px;
+  }
+
+  .header__signin-btn {
+    padding: 5px 12px;
   }
 }

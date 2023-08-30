@@ -29,14 +29,21 @@
 }
 
 .link_highlighted {
-  padding: 3px;
+  padding: 4px;
   border-bottom: 2px solid white;
 }
 
 .button {
   transition: opacity .4s ease-out;
+  cursor: pointer;
 }
 
 .button:hover {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 449.98px) {
+  .link_highlighted {
+    padding: 7px;
+  }
 }

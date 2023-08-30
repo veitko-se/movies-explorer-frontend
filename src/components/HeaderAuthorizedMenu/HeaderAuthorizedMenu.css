@@ -1,0 +1,22 @@
+.menu_type_header-authorized {
+  width: 59.1%;
+}
+
+.burger-btn {
+  border: none;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  display: none;
+}
+
+@media screen and (max-width: 768.98px) {
+ .menu_type_header-authorized {
+    display: none;
+  }
+
+  .burger-btn {
+    display: block;
+  }
+}
