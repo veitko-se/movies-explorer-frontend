@@ -29,11 +29,20 @@
   justify-content: space-between;
   align-items: center;
   gap: 7px;
-  border: 3px solid #073042;
+  border: 3px solid;
   border-radius: 40px;
-  background: #073042;
   box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
   padding: 0 0 0 9px;
+}
+
+.account-btn_color_black {
+  border-color: #202020;
+  background: #202020;
+}
+
+.account-btn_color_blue {
+  border-color: #073042;
+  background: #073042;
 }
 
 .account-btn__text {
@@ -44,10 +53,17 @@
 
 .account-btn__circle {
   border-radius: 50px;
-  background: #0F4157;
   width: 26px;
   aspect-ratio: 1/1;
   display: flex;
+}
+
+.account-btn__circle_color_black {
+  background: #313131;
+}
+
+.account-btn__circle_color_blue {
+  background: #0F4157;
 }
 
 .account-btn__icon {

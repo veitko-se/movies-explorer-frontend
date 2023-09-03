@@ -76,15 +76,6 @@
   line-height: 1.2;
 }
 
-.account-btn_type_side {
-  border-color: #202020;;
-  background: #202020;;
-}
-
-.account-btn__circle_type_side {
-  background: #313131;
-}
-
 @media screen and (max-width: 449.98px) {
   .menu-block__content {
     width: 100%;

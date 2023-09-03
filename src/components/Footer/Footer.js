@@ -2,9 +2,12 @@ import './Footer.css';
 import { useLocation } from "react-router-dom";
 
 function Footer() {
-
   const { pathname } = useLocation();
-  if (pathname === "/404") return null;
+  const noFooterPages = ["/404", "/profile", "/signup", "/signin"];
+
+  if (noFooterPages.includes(pathname)) {
+    return null;
+  };
 
   return (
     <section className="footer">

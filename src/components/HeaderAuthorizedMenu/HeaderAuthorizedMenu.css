@@ -11,6 +11,12 @@
   display: none;
 }
 
+.burger-btn__icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
 @media screen and (max-width: 768.98px) {
  .menu_type_header-authorized {
     display: none;
@@ -20,3 +26,10 @@
     display: block;
   }
 }
+
+@media screen and (max-width: 449.98px) {
+  .burger-btn__icon {
+    width: 40px;
+    height: 43px;
+  }
+ }
