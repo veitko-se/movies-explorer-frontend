@@ -1,4 +1,4 @@
-import HeaderAuthorizedMenu from '../HeaderAuthorizedMenu/HeaderAuthorizedMenu'; /* важен порядок, иначе не применятся стили */
+import HeaderAuthorizedMenu from '../Menu/HeaderAuthorizedMenu/HeaderAuthorizedMenu'; /* важен порядок, иначе не применятся стили */
 import './Header.css';
 import headerLogo from '../../images/header-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
@@ -14,7 +14,7 @@ function Header({ loggedIn, handleBurgerMenuClick }) {
   return (
     <header className={`header ${(pathname==="/")&&'header_type_promo'}`}>
       <div className="header__content">
-        <Link to="/"><img src={headerLogo} alt="Логотип" className="header__logo button" /></Link>
+        <Link to="/"><img src={headerLogo} alt="Логотип" className="logo button" /></Link>
         {loggedIn
           ? <HeaderAuthorizedMenu handleBurgerMenuClick={handleBurgerMenuClick} color={(pathname==="/")?'blue':'black'} />
           : <nav className="menu">

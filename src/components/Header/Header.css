@@ -15,14 +15,6 @@
   margin: auto;
 }
 
-.header__logo {
-  max-width: 38px;
-  aspect-ratio: 1/1;
-  line-height: 0;
-  display: flex;
-  justify-self: center;
-}
-
 .header__signup-btn {
   font-size: 12px;
   font-weight: 500;

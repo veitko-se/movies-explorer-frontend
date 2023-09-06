@@ -6,8 +6,8 @@
   margin: auto;
   padding: 74px 0 70px;
   align-items: center;
-  height: 100%;
   max-height: 630px;
+  height: calc(100vh - 74px);
 }
 
 .profile__btn-block {

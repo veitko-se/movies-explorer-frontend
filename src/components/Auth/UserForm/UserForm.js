@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
-import Form from '../Form/Form';
-import useFormAndValidation from '../../hooks/useFormAndValidation';
+import Form from '../../Form/Form';
+import useFormAndValidation from '../../../hooks/useFormAndValidation';
 import './UserForm.css';
 
 

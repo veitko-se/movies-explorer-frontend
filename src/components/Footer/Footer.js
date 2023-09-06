@@ -10,7 +10,7 @@ function Footer() {
   };
 
   return (
-    <section className="footer">
+    <footer className="footer">
       <p className="footer__text">Учебный проект Яндекс.Практикум х BeatFilm.</p>
       <div className="footer__nav-block">
         <p className="footer__copyright">&copy; 2023</p>
@@ -25,7 +25,7 @@ function Footer() {
           </ul>
         </nav>
       </div>
-    </section>
+    </footer>
   )
 }
 
