@@ -3,13 +3,13 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 
 function MoviesCardList({ movies }) {
   return (
-    <section className="movies-cardlist" aria-label="Фильмы">
+    <ul className="movies-cardlist" aria-label="Фильмы">
       {movies.map((movie) => {
         return (
           <MoviesCard movie={movie} key={movie.movieId} />
         );
       })}
-    </section>
+    </ul>
   );
 }
 

@@ -60,7 +60,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
           type="password"
           className={`form__input form__input_type_${formName} ${errors.password&&'form__input_type_error'}`}
           id="input-password"
-          placeholder="Пароль"
+          placeholder="введите пароль"
           required
           name="password"
           minLength="2"

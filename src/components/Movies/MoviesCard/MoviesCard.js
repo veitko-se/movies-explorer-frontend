@@ -11,7 +11,7 @@ function MoviesCard({ movie }) {
   };
 
   return (
-    <article className="movies-card">
+    <li className="movies-card">
       <img className="movies-card__image" src={movie.thumbnail} alt={movie.nameRU} />
       <div className="movies-card__footer">
         <div className="movies-card__text-block">
@@ -19,13 +19,13 @@ function MoviesCard({ movie }) {
           <p className="movies-card__duration">1ч42м{/*movie.duration*/}</p>
         </div>
         {pathname === "/movies" &&
-          <button onClick={saveMovie} className={`movies-card__btn ${isLiked && "movies-card__btn_type_active"} button`} />
+          <button onClick={saveMovie} className={`movies-card__btn ${isLiked && "movies-card__btn_type_active"} button`} type="button" />
         }
         {pathname === "/saved-movies" &&
-          <button className="movies-card__btn movies-card__btn_type_delete button" />
+          <button className="movies-card__btn movies-card__btn_type_delete button" type="button" />
         }
       </div>
-    </article>
+    </li>
   );
 }
 

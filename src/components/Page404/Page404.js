@@ -9,13 +9,13 @@ function Page404() {
   };
 
   return (
-    <section className="page404">
+    <main className="page404">
       <div className="page404__text-block">
-        <h2 className="page404__title">404</h2>
+        <h1 className="page404__title">404</h1>
         <p className="page404__text">Страница не найдена</p>
       </div>
-      <button className="page404__back-btn button" onClick={handleBackButtonClick}>Назад</button>
-    </section>
+      <button className="page404__back-btn button" onClick={handleBackButtonClick} type="button">Назад</button>
+    </main>
   )
 }
 

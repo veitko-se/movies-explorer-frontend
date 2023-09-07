@@ -14,17 +14,17 @@ function Profile() {
 
   function onSignOut() {
     //localStorage.removeItem('token');
-    navigate('/sign-in');
+    navigate('/');
   }
 
   return (
-    <section className="profile">
+    <main className="profile">
       <UserForm formName="profile" title="Привет, Виталий!" buttonText="Сохранить" isButtonVisible={isEditable} />
       <div className={`profile__btn-block ${isEditable && 'profile__btn-block_unvisible'}`}>
-        <button className="button profile__btn" onClick={onEdit}>Редактировать</button>
-        <button onClick={onSignOut} className="button profile__btn profile__btn_type_signout">Выйти из аккаунта</button>
+        <button className="button profile__btn" onClick={onEdit} type="button">Редактировать</button>
+        <button onClick={onSignOut} className="button profile__btn profile__btn_type_signout" type="button">Выйти из аккаунта</button>
       </div>
-    </section>
+    </main>
   )
 }
 

@@ -9,16 +9,16 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <section className="movies">
+    <main className="movies">
       <SearchForm />
       {isLoading
         ? <Preloader />
         : <>
             <MoviesCardList movies={initialMovies} />
-            <button className="button movies__btn">Ещё</button>
+            <button className="button movies__btn" type="button">Ещё</button>
           </>
       }
-    </section>
+    </main>
   );
 }
 

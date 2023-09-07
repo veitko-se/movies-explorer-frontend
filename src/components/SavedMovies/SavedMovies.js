@@ -9,13 +9,13 @@ function SavedMovies() {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <section className="movies">
+    <main className="movies">
       <SearchForm />
       {isLoading
         ? <Preloader />
         : <MoviesCardList movies={initialMovies} />
       }
-    </section>
+    </main>
   );
 }
 

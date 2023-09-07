@@ -14,10 +14,12 @@ function SideMenu({ isMenuOpen, handleCloseMenuClick }) {
   };
 
   return (
-    <section className={`menu-block ${isMenuOpen && 'menu-block_visible'}`}>
+    <section className={`menu-block ${isMenuOpen && 'menu-block_visible'}`} aria-label='Навигация по сайту'>
       <div className='menu-block__cover' onClick={handleCloseMenuClick}></div>
       <div className={`menu-block__content ${isMenuOpen && 'menu-block__content_visible'}`}>
-        <button className="menu-block__close-btn button" onClick={handleCloseMenuClick}><img src={menuClose} alt="Закрыть" className="menu-block__close-icon" /></button>
+        <button className="menu-block__close-btn button" onClick={handleCloseMenuClick} type="button">
+          <img src={menuClose} alt="Закрыть" className="menu-block__close-icon" />
+        </button>
         <Menu name='side' color='black'>
           <li><Link to="/" className="menu__item menu__item_type_side link">Главная</Link></li>
           <li><Link to="/movies" className="menu__item menu__item_type_side link link_highlighted">Фильмы</Link></li>

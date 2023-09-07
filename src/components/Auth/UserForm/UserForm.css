@@ -33,11 +33,10 @@
 
 .form__input::placeholder {
   color: #8B8B8B;
-  text-align: right;
 }
 
-.form__input_type_auth::placeholder {
-  visibility: hidden;
+.form__input_type_profile::placeholder {
+  text-align: right;
 }
 
 .form__input:focus {

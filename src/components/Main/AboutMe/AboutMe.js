@@ -13,7 +13,7 @@ function AboutMe() {
           Люблю животных и путешествия. С&nbsp;2017 года работаю инженером в ГБУЗ «МИАЦ ЯНАО», с 2014 года подрабатываю в&nbsp;операторе связи.
           Недавно увлеклась веб-разработкой и поступила на курс от&nbsp;Яндекс.Практикума.</p>
         <a href="https://github.com/veitko-se" className="about-me__link link" target="_blank" rel="noopener noreferrer">Github</a>
-        <img src={photo} alt="Мое фото" className="about-me__photo" />
+        <img src={photo} alt="Фотография разработчика проекта" className="about-me__photo" />
       </div>
       <Portfolio />
     </section>
