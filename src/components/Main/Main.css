@@ -1,0 +1,41 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+.landing__element {
+  max-width: 1140px;
+  margin: auto;
+}
+
+.landing__element-title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.88px;
+  border-bottom: #DADADA 1px solid;
+  padding: 0 0 23px;
+  margin: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 1023.98px) {
+  .landing__element {
+    max-width: 668px;
+  }
+}
+
+@media screen and (max-width: 449.98px) {
+  .landing__element {
+    max-width: 292px;
+  }
+
+  .landing__element-title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    padding: 0 0 28px;
+  }
+}
