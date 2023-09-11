@@ -1,21 +1,35 @@
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import "./SearchForm.css";
+import Form from '../../Form/Form';
+import './SearchForm.css';
 
-function SearchForm() {
+
+function SearchForm({handleSubmit, handleIsShortFilmCheckbox, values, errors, isValid, handleChange, searchText, isShortFilm}) {
   return (
-    <form className="search">
-      <div className="search__container">
+    <section className="search">
+      <Form
+        formName='search'
+        title='Поиск фильма' buttonText=''
+        values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      >
         <input
-          type="text"
-          className="search__input"
+          title=""
+          aria-label="Фильм"
+          name="search"
+          type="search"
+          className={`form__input form__input_type_search ${errors.email && 'form__input_type_error'}`}
+          id="input-search"
           placeholder="Фильм"
           required
+          minLength="1"
+          maxLength="80"
+          value={values.search || ''}
+          onChange={handleChange}
         />
-        <button type="submit" className="button search__btn" />
-      </div>
-    <FilterCheckbox filterText='Короткометражки'/>
-    </form>
-  );
+      </Form>
+      <FilterCheckbox filterText='Короткометражки' handleCheckbox={handleIsShortFilmCheckbox} isChecked={isShortFilm} />
+    </section>
+  )
 }
 
 export default SearchForm;

@@ -22,6 +22,17 @@
   flex-shrink: 0;
 }
 
+.movies__message {
+  color: #8B8B8B;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  display: flex;
+  margin: auto;
+  padding: 0;
+}
+
 @media screen and (max-width: 449.98px) {
   .movies {
     min-height: calc(100vh - 74px - 253px);

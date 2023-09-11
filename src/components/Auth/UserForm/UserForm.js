@@ -23,6 +23,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
     >
       { !(pathname==='/signin') &&
         <input
+          title="Имя"
           aria-label="Имя"
           name="name"
           type="text"
@@ -40,6 +41,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
       }
 
         <input
+          title="E-mail"
           aria-label="E-mail"
           name="email"
           type="email"
@@ -56,6 +58,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
 
       { !(pathname==='/profile') &&
         <input
+          title="Пароль"
           aria-label="Пароль"
           type="password"
           className={`form__input form__input_type_${formName} ${errors.password&&'form__input_type_error'}`}

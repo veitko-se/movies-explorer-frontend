@@ -3,22 +3,29 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 70px 70px 47px;
+  margin: 57px 70px 47px;
   width: calc(100% - 70px - 70px);
   max-width: 1140px;
 }
 
-.search__container {
+.form_type_search {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   border-bottom: 1px solid #424242;
   gap: 46px;
   margin: 0 0 32px;
 }
 
-.search__input {
+.form-title_type_search {
+  display: none;
+}
+.form__input-block_type_search {
+  justify-content: center;
+}
+
+.form__input_type_search {
   width: 100%;
   outline: none;
   border: none;
@@ -31,22 +38,41 @@
   margin: 0;
 }
 
-.search__input:focus {
+.form__input_type_search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin: 0 0 0 20px;
+  background: url("../../../images/menu-close.svg") no-repeat center / cover;
+  transition: all 0.3s;
+}
+
+.form__input_type_search:focus {
   color: #fff;
 }
 
-.search__input::placeholder {
+.form__input_type_search::placeholder {
   color: #8B8B8B;
 }
 
-.search__btn {
+.form__error_type_search {
+  top: calc(100% + 10px);
+  left: 0;
+  font-size: 10px;
+  line-height: 1.2;
+  min-height: 17px;
+  max-height: 24px;
+}
+
+.form__submit_type_search {
   padding: 0;
-  margin: 0 0 13px;
+  margin: 13px 0;
   outline: none;
   border: none;
   background-image: url('../../../images/find-btn.svg');
   width: 34px;
-  aspect-ratio: 1/1;
+  height: 34px;
   line-height: 0;
   flex-shrink: 0;
   border-radius: 50%;
@@ -56,11 +82,11 @@
 @media screen and (max-width: 1023.98px) {
   .search {
     align-items: flex-end;
-    margin: 80px 30px 60px;
+    margin: 67px 30px 60px;
     width: calc(100% - 30px - 30px);
   }
 
-  .search__container {
+  .form_type_search {
     margin: 0 0 29px;
   }
 }
@@ -68,19 +94,24 @@
 @media screen and (max-width: 449.98px) {
   .search {
     align-items: center;
-    margin: 89px 14px 50px;
+    margin: 76px 14px 50px;
     width: calc(100% - 14px - 14px);
   }
 
-  .search__input {
+  .form__input_type_search {
     font-size: 18px;
   }
 
-  .search__container {
+  .form_type_search {
     margin: 0 0 40px;
+    justify-content: center;
   }
 
-  .search__btn {
-    margin: 0 0 6px;
+  .form__submit_type_search {
+    margin: 9px 0;
+  }
+
+  .form__field_type_search {
+    width: 100%;
   }
 }
