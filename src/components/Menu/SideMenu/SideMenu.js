@@ -4,7 +4,7 @@ import Menu from '../Menu';
 import './SideMenu.css';
 import menuClose from '../../../images/menu-close.svg';
 
-function SideMenu({ isMenuOpen, handleCloseMenuClick }) {
+function SideMenu({ isMenuOpen, handleCloseMenuClick/*, onAccount*/}) {
   useEffect(() => {
     handleShowScroll();
   }, [isMenuOpen]);
@@ -20,7 +20,7 @@ function SideMenu({ isMenuOpen, handleCloseMenuClick }) {
         <button className="menu-block__close-btn button" onClick={handleCloseMenuClick} type="button">
           <img src={menuClose} alt="Закрыть" className="menu-block__close-icon" />
         </button>
-        <Menu name='side' color='black'>
+        <Menu name='side' color='black'/* onAccount={onAccount}*/>
           <li><Link to="/" className="menu__item menu__item_type_side link">Главная</Link></li>
           <li><Link to="/movies" className="menu__item menu__item_type_side link link_highlighted">Фильмы</Link></li>
           <li><Link to="/saved-movies" className="menu__item menu__item_type_side link">Сохранённые фильмы</Link></li>

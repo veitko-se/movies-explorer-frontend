@@ -4,34 +4,14 @@ import { useState } from "react";
 import { MOVIE_BASE_URL } from '../../../utils/constants';
 import minutesToHours from '../../../utils/minutesToHours';
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onCardLike }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
 
   function handleLikeClick() {
-    //onCardLike(card);
+    onCardLike(movie, isLiked);
     setIsLiked(!isLiked);
   }
-
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some(i => i._id === currentUser._id);
-  //   api.changeLikeCardStatus(card._id, !isLiked)
-  //   .then((newCard) => {
-  //     setCards(cardsCopy => cardsCopy.map(
-  //       cardCopy => cardCopy._id === card._id ? newCard : cardCopy
-  //     ));
-  //   })
-  //   .catch(err => console.log(`Ошибка: ${err}`));
-  // };
-
-  // function handleAddPlaceSubmit(newCard) {
-  //   api.pushCard(newCard)
-  //   .then((newCard) => {
-  //     setCards([newCard, ...cards]);
-  //     closeAllPopups();
-  //   })
-  //   .catch(err => console.log(`Ошибка: ${err}`));
-  // };
 
   return (
     <li className="movies-card">

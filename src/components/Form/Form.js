@@ -21,7 +21,7 @@ function Form({ formName, title, children, errors, isValid, isButtonVisible = tr
                   <span
                     className={`form__error form__error_type_${formName} ${!isValid && 'form__error_visible'}`}
                     id={`input-${inputName}-error`}
-                    // name={inputName}
+                    name={inputName} //атрибут name нужен для работы автозаполнения в браузере!
                   >{errors[inputName]}
                   </span>
                 </label>

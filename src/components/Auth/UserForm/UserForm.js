@@ -1,18 +1,29 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import { useLocation } from "react-router-dom";
-import Form from '../../Form/Form';
+import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
 import useFormAndValidation from '../../../hooks/useFormAndValidation';
+import Form from '../../Form/Form';
 import './UserForm.css';
 
 
-function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
+function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit }) {
+  const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  const { values, errors, isValid, handleChange } = useFormAndValidation();
+  const { values, errors, isValid, handleChange, resetForm } = useFormAndValidation();
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, [isButtonVisible]);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onSubmit(values.name, values.email, values.password);
+  };
+
+  useEffect(() => {
+    resetForm({name: currentUser.name, email: currentUser.email, password: ''});
+  }, []);
 
   return (
     <Form
@@ -20,6 +31,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
       title={title} buttonText={buttonText}
       isButtonVisible={isButtonVisible}
       values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+      handleSubmit={handleSubmit}
     >
       { !(pathname==='/signin') &&
         <input
@@ -33,7 +45,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
           required
           minLength="2"
           maxLength="40"
-          value={values.name || ''}
+          value={values.name || currentUser.name}
           onChange={handleChange}
           disabled={!isButtonVisible}
           ref={inputRef}
@@ -51,7 +63,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
           required
           minLength="2"
           maxLength="40"
-          value={values.email || ''}
+          value={values.email || currentUser.email}
           onChange={handleChange}
           disabled={!isButtonVisible}
         />

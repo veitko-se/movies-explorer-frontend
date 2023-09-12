@@ -3,12 +3,12 @@ import SearchForm from "./SearchForm/SearchForm";
 import Preloader from "./Preloader/Preloader";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import "./Movies.css";
-import moviesApi from '../../utils/MoviesApi';
+import moviesApi from '../../utils/Api/moviesApi';
 import useFormAndValidation from '../../hooks/useFormAndValidation';
 import {useLocalStorage} from '../../hooks/useLocalStorage';
 import {useResize} from '../../hooks/useResize';
 
-function Movies() {
+function Movies({onCardLike}) {
   const { values, errors, isValid, handleChange } = useFormAndValidation();
   const [isShortFilm, setIsShortFilm] = useLocalStorage("localIsShortFilm", false);
   const [searchText, setSearchText] = useLocalStorage("localSearchText", "");
@@ -155,7 +155,7 @@ function handleBtnMoreClick() {
           </p>
         : isLoadOk
         ? <>
-            <MoviesCardList movies={moviesToShow} />
+            <MoviesCardList movies={moviesToShow} onCardLike={onCardLike} />
             {movies.length > moviesToShow.length && <button className="button movies__btn" type="button" onClick={handleBtnMoreClick}>Ещё</button>}
           </>
         : <p className="movies__message">

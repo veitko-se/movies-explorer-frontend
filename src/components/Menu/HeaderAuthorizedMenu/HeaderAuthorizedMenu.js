@@ -3,10 +3,10 @@ import Menu from '../Menu';
 import './HeaderAuthorizedMenu.css';
 import headerBurgerIcon from '../../../images/header-burger-icon.svg';
 
-function HeaderAuthorizedMenu({ handleBurgerMenuClick, color }) {
+function HeaderAuthorizedMenu({ handleBurgerMenuClick, color/*, onAccount */}) {
   return (
     <>
-      <Menu name='header-authorized' color={color}>
+      <Menu name='header-authorized' color={color} /*onAccount={onAccount}*/>
         <li><Link to="/movies" className="menu__item link_highlighted link">Фильмы</Link></li>
         <li><Link to="/saved-movies" className="menu__item link">Сохранённые фильмы</Link></li>
       </Menu>
