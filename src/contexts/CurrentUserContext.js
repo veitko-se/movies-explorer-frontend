@@ -3,7 +3,7 @@ export const CurrentUserContext = React.createContext();
 
 export const user = {
   default: {
-    name: '',
-    email: '',
+    name: 'Студент',
+    email: 'email@email.ru',
   }
 };

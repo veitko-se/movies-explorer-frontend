@@ -1,3 +1,23 @@
+.button-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  max-width: 100%;
+}
+
+.button-block__error {
+  color: #FF004C;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  display: flex;
+  margin: 0 auto 20px;
+  padding: 0;
+  max-width: 100%;
+}
+
 .form__submit {
   width: 100%;
   height: 45px;
@@ -18,8 +38,7 @@
 }
 
 .form__submit_disabled {
-  opacity: 0.8;
-  background-color: #3456F3;
+  opacity: 0.3;
   pointer-events: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -27,7 +46,7 @@
   user-select: none;
 }
 
-@media screen and (max-width: 449.98px) {
+@media screen and (max-width: 479.98px) {
   .form__submit {
     font-size: 12px;
   }

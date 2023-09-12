@@ -1,40 +1,22 @@
-function Movies() {
-  function filterByInput(searchText, movies) {
-    return movies.filter(movie =>
-      movie.nameRU.toLowerCase().includes(searchText.toLowerCase()) ||
-      movie.nameEN.toLowerCase().includes(searchText.toLowerCase())
-    );
+export default function getFilteredMovies(searchText, isShortFilm ) {
+
+  const filterBySearchText = (movie) => {
+    const normalizedText = searchText.toLowerCase();
+    const movieNames = [movie.nameEN, movie.nameRU].map(v => v.toLowerCase());
+    return movieNames.some(v => v.includes(normalizedText));
   }
 
-  function filterByCheckbox(isShort, movies) {
-    if (isShort) {
-      return movies.filter(movie =>
-        movie.duration <= 40
-      );
-    } return movies;
+  const filterByCheckbox = (movie) => {
+    return isShortFilm ? movie.duration <= 40 : true;
   }
 
-  function checkLoadStatus(movies) {
-    if (movies.length > 0) {
-      setIsLoadOk(true); setIsNoResult(false)
-    } else {
-      setIsLoadOk(false); setIsNoResult(true)
-    }
+  function filterMovies(...filters) {
+    const localMovies = localStorage.getItem('localMovies') || "[]";
+    const movies = JSON.parse(localMovies);
+    return movies.filter(v => filters.every(f => f(v)));
   }
 
-  function getFilteredElements(data) {
-      let moviesFiltered = JSON.parse(data);
-      moviesFiltered = filterByCheckbox(isShortFilm, moviesFiltered);
-      moviesFiltered = filterByInput(searchText, moviesFiltered);
-      return moviesFiltered;
-  }
+  const filteredMovies = filterMovies(filterBySearchText, filterByCheckbox);
 
-  function setFilterForMovies() {
-    const localMovies = localStorage.getItem('localMovies');
-    if (localMovies) {
-      const moviesFiltered = getFilteredElements(localMovies)
-      setMovies(moviesFiltered);
-      checkLoadStatus(moviesFiltered);
-    }
-  }
+  return filteredMovies;
 }

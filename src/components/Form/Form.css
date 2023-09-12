@@ -95,11 +95,7 @@
 }
 
 /*Адаптив*/
-@media screen and (max-width: 449.98px) {
-  .form__field {
-    width: 260px;
-  }
-
+@media screen and (max-width: 479.98px) {
   .form {
     height: 100%;
   }

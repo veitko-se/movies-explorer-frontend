@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react';
 
+let timeout = false; // holder for timeout id
+let delay = 250; // delay after event is "complete" to run callback
+
 export const useResize = () => {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = (event) => {
-      setWidth(event.target.innerWidth);
+      // clear the timeout
+      clearTimeout(timeout);
+      // start timing for event "completion"
+      timeout = setTimeout(setWidth, delay, event.target.innerWidth);
     };
     window.addEventListener('resize', handleResize);
     return () => {
@@ -15,9 +21,5 @@ export const useResize = () => {
 
   return {
     width,
-    isLess630: width < 630,
-    isMore630: width >= 630,
-    isMore930: width >= 930,
-    isMore1280: width >= 1280,
   };
 };

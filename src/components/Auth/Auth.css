@@ -39,7 +39,7 @@
   padding: 16px 0 0;
 }
 
-@media screen and (max-width: 449.98px) {
+@media screen and (max-width: 479.98px) {
   .auth {
     max-height: 100%;
     align-items: center;

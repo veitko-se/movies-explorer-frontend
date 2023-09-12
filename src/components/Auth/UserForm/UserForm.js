@@ -5,25 +5,26 @@ import useFormAndValidation from '../../../hooks/useFormAndValidation';
 import Form from '../../Form/Form';
 import './UserForm.css';
 
-
 function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit }) {
   const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  const { values, errors, isValid, handleChange, resetForm } = useFormAndValidation();
+  const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, [isButtonVisible]);
 
+  useEffect(() => {
+    if (currentUser && (formName==='profile')) {
+      setValues({name: currentUser.name, email: currentUser.email});
+    }
+  }, [currentUser]);
+
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(values.name, values.email, values.password);
   };
-
-  useEffect(() => {
-    resetForm({name: currentUser.name, email: currentUser.email, password: ''});
-  }, []);
 
   return (
     <Form
@@ -45,7 +46,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           required
           minLength="2"
           maxLength="40"
-          value={values.name || currentUser.name}
+          value={values.name || ''}
           onChange={handleChange}
           disabled={!isButtonVisible}
           ref={inputRef}
@@ -63,7 +64,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           required
           minLength="2"
           maxLength="40"
-          value={values.email || currentUser.email}
+          value={values.email || ''}
           onChange={handleChange}
           disabled={!isButtonVisible}
         />

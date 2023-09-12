@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
 import UserForm from '../UserForm/UserForm';
 import './Profile.css';
