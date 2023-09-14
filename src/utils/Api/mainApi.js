@@ -1,3 +1,5 @@
+import { MOVIE_BASE_URL } from '../constants';
+
 class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -38,12 +40,12 @@ class MainApi {
     })
   }
 
-  saveMovie({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN }) {
+  saveMovie({ country, director, duration, year, description, image, trailerLink, id, nameRU, nameEN }) {
     return this._request(`/movies`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN
+        country, director, duration, year, description, image: MOVIE_BASE_URL + image.url, trailerLink, thumbnail: MOVIE_BASE_URL + image.url, movieId: id, nameRU, nameEN
       })
     })
   }
@@ -56,12 +58,4 @@ class MainApi {
   }
 }
 
-const mainApi = new MainApi({
-  baseUrl: 'https://api.bitfilms.veitko-se.nomoredomains.xyz',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token')}`
-  },
-});
-
-export default mainApi;
+export default MainApi;

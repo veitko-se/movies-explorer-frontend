@@ -1,5 +1,3 @@
-import { MOVIE_BASE_URL } from '../constants';
-
 class MoviesApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -25,11 +23,4 @@ class MoviesApi {
   }
 }
 
-const moviesApi = new MoviesApi({
-  baseUrl: MOVIE_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  },
-});
-
-export default moviesApi;
+export default MoviesApi;

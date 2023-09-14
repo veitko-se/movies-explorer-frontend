@@ -45,10 +45,8 @@ class AuthApi {
         'Authorization': `Bearer ${token}`
       }
     })
-    .then(res => res.data);
+   // .then(res => res.data);
   }
 }
 
-const authApi = new AuthApi('https://api.bitfilms.veitko-se.nomoredomains.xyz');
-
-export default authApi;
+export default AuthApi;

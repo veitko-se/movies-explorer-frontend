@@ -3,7 +3,7 @@ import Form from '../../Form/Form';
 import './SearchForm.css';
 
 
-function SearchForm({handleSubmit, handleIsShortFilmCheckbox, values, errors, isValid, handleChange, searchText, isShortFilm}) {
+function SearchForm({handleSubmit, onCheckBox, values, errors, isValid, handleChange, searchText, isShortFilm}) {
   return (
     <section className="search">
       <Form
@@ -27,7 +27,7 @@ function SearchForm({handleSubmit, handleIsShortFilmCheckbox, values, errors, is
           onChange={handleChange}
         />
       </Form>
-      <FilterCheckbox filterText='Короткометражки' handleCheckbox={handleIsShortFilmCheckbox} isChecked={isShortFilm} />
+      <FilterCheckbox filterText='Короткометражки' onCheckBox={onCheckBox} isChecked={isShortFilm} />
     </section>
   )
 }

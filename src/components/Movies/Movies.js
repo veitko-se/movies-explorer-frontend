@@ -1,22 +1,14 @@
 import {useState, useEffect} from 'react';
+import useFormAndValidation from '../../hooks/useFormAndValidation';
+import {useResize} from '../../hooks/useResize';
+import getMoviesToShowCounter from "../../utils/moviesCounter";
 import SearchForm from "./SearchForm/SearchForm";
 import Preloader from "./Preloader/Preloader";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import "./Movies.css";
-import moviesApi from '../../utils/Api/moviesApi';
-import useFormAndValidation from '../../hooks/useFormAndValidation';
-import {useLocalStorage} from '../../hooks/useLocalStorage';
-import {useResize} from '../../hooks/useResize';
-import getMoviesToShowCounter from "../../utils/moviesCounter";
-import getFilteredMovies from "../../utils/searchUtils";
 
-function Movies({onCardLike}) {
-  const {values, errors, isValid, handleChange, setValues} = useFormAndValidation();
-  const [movies, setMovies] = useState(getFilteredMovies);
-  const [isShortFilm, setIsShortFilm] = useLocalStorage("localIsShortFilm", false);
-  const [searchText, setSearchText] = useLocalStorage("localSearchText", "");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
+function Movies({ onCardLike, moviesForRender, savedMovies, searchText, isShortFilm, isLoading, isErrorLoading, onCheckBox, onFilter }) {
+  const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
   const {width} = useResize();
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [moviesToShowCounter, setMoviesToShowCounter] = useState(() => getMoviesToShowCounter(width));
@@ -27,12 +19,8 @@ function Movies({onCardLike}) {
   }, []);
 
   useEffect(() => {
-    setFilteredMovies();
-  }, [isShortFilm, searchText]);
-
-  useEffect(() => {
     renderMovies();
-  }, [movies, moviesToShowCounter]);
+  }, [moviesForRender, moviesToShowCounter]);
 
   useEffect(() => {
     const moviesToShowCounter = getMoviesToShowCounter(width);
@@ -42,25 +30,11 @@ function Movies({onCardLike}) {
 
   function handleSearchSubmit(evt) {
     evt.preventDefault();
-    setIsLoading(true);
-    moviesApi.loadAllMovies()
-      .then((loadedMovies) => {
-        localStorage.setItem('localMovies', JSON.stringify(loadedMovies));
-        setSearchText(values.search);
-        setFilteredMovies();
-      })
-      .catch(err => {
-        console.log(`Ошибка: ${err}`);
-        setIsErrorLoading(true);
-      })
-      .finally(() => setIsLoading(false));
+    onFilter(values.search);
   };
 
   function handleIsShortFilmCheckbox() {
-    if (values.search) {
-      setIsShortFilm(!isShortFilm);
-      setSearchText(values.search);
-    }
+    onCheckBox(values.search)
   }
 
   function handleBtnMoreClick() {
@@ -69,18 +43,13 @@ function Movies({onCardLike}) {
     setNext(nextCounter);
   };
 
-  function setFilteredMovies() {
-    const filteredMovies = getFilteredMovies(searchText, isShortFilm)
-    setMovies(filteredMovies);
-  }
-
   function renderMovies() {
-    const slicedMovies = movies.slice(0, moviesToShowCounter.initial);
+    const slicedMovies = moviesForRender.slice(0, moviesToShowCounter.initial);
     setMoviesToShow(slicedMovies);
   };
 
   function addMovies(start, end) {
-    const slicedMovies = movies.slice(start, end);
+    const slicedMovies = moviesForRender.slice(start, end);
     const newMoviesToShow = [...moviesToShow, ...slicedMovies];
     setMoviesToShow(newMoviesToShow);
   };
@@ -88,7 +57,7 @@ function Movies({onCardLike}) {
   return (
     <main className="movies">
       <SearchForm
-        handleSubmit={handleSearchSubmit} handleIsShortFilmCheckbox={handleIsShortFilmCheckbox}
+        handleSubmit={handleSearchSubmit} onCheckBox={handleIsShortFilmCheckbox}
         values={values} errors={errors} isValid={isValid} handleChange={handleChange}
         searchText={searchText} isShortFilm={isShortFilm}
       />
@@ -102,10 +71,10 @@ function Movies({onCardLike}) {
         ? <p className="movies__message">
             Для поиска нужно ввести ключевое слово
           </p>
-        : (movies.length > 0)
+        : (moviesForRender.length > 0)
         ? <>
-            <MoviesCardList movies={moviesToShow} onCardLike={onCardLike}/>
-            {movies.length > moviesToShow.length && <button className="button movies__btn" type="button" onClick={handleBtnMoreClick}>Ещё</button>}
+            <MoviesCardList movies={moviesToShow} savedMovies={savedMovies} onCardLike={onCardLike}/>
+            {moviesForRender.length > moviesToShow.length && <button className="button movies__btn" type="button" onClick={handleBtnMoreClick}>Ещё</button>}
           </>
         : <p className="movies__message">
             Ничего не найдено
