@@ -2,10 +2,11 @@ import { useRef, useEffect, useContext } from 'react';
 import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
 import useFormAndValidation from '../../../hooks/useFormAndValidation';
+import { validateName, validateEmail } from '../../../utils/validationRules';
 import Form from '../../Form/Form';
 import './UserForm.css';
 
-function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit, isServerError }) {
+function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit, isServerError, isServerApplied }) {
   const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
   const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
@@ -34,6 +35,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
       values={values} errors={errors} isValid={isValid} handleChange={handleChange}
       handleSubmit={handleSubmit}
       isServerError={isServerError}
+      isServerApplied={isServerApplied}
     >
       { !(pathname==='/signin') &&
         <input
@@ -51,6 +53,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           onChange={handleChange}
           disabled={!isButtonVisible}
           ref={inputRef}
+          customerrortext={validateName(values.name).error}
         />
       }
 
@@ -68,6 +71,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           value={values.email || ''}
           onChange={handleChange}
           disabled={!isButtonVisible}
+          customerrortext={validateEmail(values.email).error}
         />
 
       { !(pathname==='/profile') &&

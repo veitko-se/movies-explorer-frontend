@@ -2,7 +2,7 @@ import { Children } from 'react';
 import SubmitButton from './SubmitButton/SubmitButton';
 import './Form.css';
 
-function Form({ formName, title, children, errors, isValid, isButtonVisible = true, buttonText, handleSubmit, isServerError }) {
+function Form({ formName, title, children, errors, isValid, isButtonVisible = true, buttonText, handleSubmit, isServerError, isServerApplied }) {
   return (
     <>
       <h1 className={`form-title form-title_type_${formName}`}>{title}</h1>
@@ -13,6 +13,7 @@ function Form({ formName, title, children, errors, isValid, isButtonVisible = tr
             if (child) {
               const inputName = child.props.name;
               const inputTitle = child.props.title;
+              const errorText = child.props.customerrortext;
               return (
 
                 <label key={inputName} className={`form__field form__field_type_${formName}`}>
@@ -22,7 +23,8 @@ function Form({ formName, title, children, errors, isValid, isButtonVisible = tr
                     className={`form__error form__error_type_${formName} ${!isValid && 'form__error_visible'}`}
                     id={`input-${inputName}-error`}
                     name={inputName} //атрибут name нужен для работы автозаполнения в браузере!
-                  >{errors[inputName]}
+                  >
+                    {errorText || errors[inputName]}
                   </span>
                 </label>
 
@@ -31,7 +33,7 @@ function Form({ formName, title, children, errors, isValid, isButtonVisible = tr
           })}
 
         </div>
-        <SubmitButton isValid={isValid} isVisible={isButtonVisible} formName={formName} isServerError={isServerError} >{buttonText}</SubmitButton>
+        <SubmitButton isValid={isValid} isVisible={isButtonVisible} formName={formName} isServerError={isServerError} isServerApplied={isServerApplied}>{buttonText}</SubmitButton>
       </form>
     </>
   )

@@ -30,6 +30,7 @@ function App() {
   const [isErrorLoading, setIsErrorLoading] = useState(false);
   const [isAuthError, setIsAuthError] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
+  const [isServerApplied, setIsServerApplied] = useState(false);
   const [allMovies, setAllMovies] = useLocalStorage("localMovies", []);
   const [queryAllMovies, setQueryAllMovies] = useLocalStorage("localQueryAllMovies", "");
   const [checkboxAllMovies, setCheckboxAllMovies] = useLocalStorage("localCheckboxAllMovies", false);
@@ -63,6 +64,14 @@ function App() {
       handleTokenCheck()
     }
   }, [isLoggedIn, pathname]);
+
+  useEffect(() => {
+    isEditable && setIsServerApplied(false)
+  }, [isEditable]);
+
+  useEffect(() => {
+    setIsServerApplied(false)
+  }, [pathname]);
 
   function handleTokenCheck() {
     if (localStorage.getItem('token')){
@@ -209,9 +218,11 @@ function App() {
       setCurrentUser(userInfo);
       setIsEditable(false);
       setIsAuthError(false);
+      setIsServerApplied(true);
     })
     .catch(err => {
       setIsAuthError(true);
+      setIsServerApplied(false);
       console.log(`Ошибка: ${err}`);
     })
   };
@@ -234,6 +245,7 @@ function App() {
             onSave={onSaveUserInfo}
             isEditable={isEditable}
             isServerError={isAuthError}
+            isServerApplied={isServerApplied}
             />
           } />
           <Route path="/movies" element={
