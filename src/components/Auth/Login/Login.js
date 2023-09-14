@@ -4,11 +4,11 @@ import headerLogo from '../../../images/header-logo.svg';
 import './Login.css';
 
 
-function Login({onLogin}) {
+function Login({onLogin, isServerError}) {
   return (
     <main className="auth">
       <Link to="/"><img src={headerLogo} alt="Логотип" className="logo button" /></Link>
-      <UserForm formName="auth" title="Рады видеть!" buttonText="Войти" onSubmit={onLogin} />
+      <UserForm formName="auth" title="Рады видеть!" buttonText="Войти" onSubmit={onLogin} isServerError={isServerError} />
       <p className="auth__question-block">Ещё не зарегистрированы?&nbsp;
         <Link to="/signup" className="button auth__btn">Регистрация</Link>
       </p>

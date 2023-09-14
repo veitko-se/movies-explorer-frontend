@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import './App.css';
 import {Route, Routes, Navigate, useNavigate, useLocation} from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
@@ -8,38 +7,37 @@ import Footer from '../Footer/Footer';
 import Page404 from '../Page404/Page404';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import SideMenu from '../Menu/SideMenu/SideMenu';
+import SideMenu from '../SideMenu/SideMenu';
 import Register from '../Auth/Register/Register';
 import Login from '../Auth/Login/Login';
 import Profile from '../Auth/Profile/Profile';
 import MainApi from '../../utils/Api/MainApi';
 import AuthApi from '../../utils/Api/AuthApi';
+import MoviesApi from '../../utils/Api/MoviesApi';
 import {CurrentUserContext, user} from '../../contexts/CurrentUserContext';
 import {useLocalStorage} from '../../hooks/useLocalStorage';
 import useFilterForMovies from "../../hooks/useFilterForMovies";
-import useFilterForSavedMovies from "../../hooks/useFilterForMovies";
-import MoviesApi from '../../utils/Api/MoviesApi';
 import { MOVIE_BASE_URL } from '../../utils/constants';
-
+import './App.css';
 
 function App() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [currentUser, setCurrentUser] = useState(user.default);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token')||"" ? true : false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isRegisterError, setIsRegisterError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(user.default);
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const [isAuthError, setIsAuthError] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
+  const [allMovies, setAllMovies] = useLocalStorage("localMovies", []);
+  const [queryAllMovies, setQueryAllMovies] = useLocalStorage("localQueryAllMovies", "");
+  const [checkboxAllMovies, setCheckboxAllMovies] = useLocalStorage("localCheckboxAllMovies", false);
+  const [filteredAllMovies, setFilteredAllMovies] = useFilterForMovies(allMovies, queryAllMovies, checkboxAllMovies);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [querySavedMovies, setQuerySavedMovies] = useLocalStorage("localQuerySavedMovies", "");
   const [checkboxSavedMovies, setCheckboxSavedMovies] = useLocalStorage("localCheckboxSavedMovies", false)
-  const [checkboxAllMovies, setCheckboxAllMovies] = useLocalStorage("localCheckboxAllMovies", false);
-  const [queryAllMovies, setQueryAllMovies] = useLocalStorage("localQueryAllMovies", "");
-  const [allMovies, setAllMovies] = useLocalStorage("localMovies", []);
-  const [movies, setMovies] = useFilterForSavedMovies(allMovies, queryAllMovies, checkboxAllMovies);
-  const [savedMovies, setSavedMovies] = useState([]);
-  const [filteredSavedMovies, setFilteredSavedMovies] = useFilterForSavedMovies(savedMovies, querySavedMovies, checkboxSavedMovies);
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+  const [filteredSavedMovies, setFilteredSavedMovies] = useFilterForMovies(savedMovies, querySavedMovies, checkboxSavedMovies);
 
   const mainApi = new MainApi({
     baseUrl: 'https://api.bitfilms.veitko-se.nomoredomains.xyz',
@@ -127,7 +125,7 @@ function App() {
       setAllMovies(loadedMovies);
     })
     .then(() => {
-      setMovies();
+      setFilteredAllMovies();
       setQueryAllMovies(inputValue);
     })
     .catch(err => {
@@ -171,10 +169,9 @@ function App() {
     authApi.register(name, email, password)
     .then(() => {
       onLogin(name, email, password);
-      setIsRegisterError(false);
     })
     .catch(err => {
-      setIsRegisterError(true);
+      setIsAuthError(true);
       console.log(`Ошибка: ${err}`);
     });
   };
@@ -185,10 +182,11 @@ function App() {
       if (data.token){
         setIsLoggedIn(true)
         navigate('/movies', {replace: true});
+        setIsAuthError(false);
       }
     })
     .catch(err => {
-      setIsRegisterError(true);
+      setIsAuthError(true);
       console.log(`Ошибка: ${err}`);
     })
   };
@@ -210,8 +208,12 @@ function App() {
     .then((userInfo) => {
       setCurrentUser(userInfo);
       setIsEditable(false);
+      setIsAuthError(false);
     })
-    .catch(err => console.log(`Ошибка: ${err}`));
+    .catch(err => {
+      setIsAuthError(true);
+      console.log(`Ошибка: ${err}`);
+    })
   };
 
   return (
@@ -222,15 +224,22 @@ function App() {
         <Routes>
           <Route path="*" element={<Navigate to="/404" replace/>}/>
           <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Register onRegister={onRegister} />} />
-          <Route path="/signin" element={<Login onLogin={onLogin} />} />
+          <Route path="/signup" element={<Register onRegister={onRegister} isServerError={isAuthError} />} />
+          <Route path="/signin" element={<Login onLogin={onLogin} isServerError={isAuthError} />} />
           <Route path="/profile" element={
-            <ProtectedRoute element={Profile} isLoggedIn={isLoggedIn}
-            onSignOut={onSignOut} onEdit={onEditUserInfo} onSave={onSaveUserInfo} isEditable={isEditable} />
+            <ProtectedRoute element={Profile}
+            isLoggedIn={isLoggedIn}
+            onSignOut={onSignOut}
+            onEdit={onEditUserInfo}
+            onSave={onSaveUserInfo}
+            isEditable={isEditable}
+            isServerError={isAuthError}
+            />
           } />
           <Route path="/movies" element={
             <ProtectedRoute element={Movies}
-              moviesForRender={movies}
+              moviesBeforeFfilter={allMovies}
+              moviesAfterFilter={filteredAllMovies}
               savedMovies={savedMovies}
               searchText={queryAllMovies}
               isShortFilm={checkboxAllMovies}
@@ -244,8 +253,8 @@ function App() {
           } />
           <Route path="/saved-movies" element={
             <ProtectedRoute element={SavedMovies}
-              moviesForRender={filteredSavedMovies}
-              savedMovies={savedMovies}
+              moviesBeforeFfilter={savedMovies}
+              moviesAfterFilter={filteredSavedMovies}
               searchText={querySavedMovies}
               isShortFilm={checkboxSavedMovies}
               onFilter={onFilterSavedMovies}

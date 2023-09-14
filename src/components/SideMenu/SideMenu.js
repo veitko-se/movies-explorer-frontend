@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
-import Menu from '../Menu';
+import Menu from '../Menu/Menu';
 import './SideMenu.css';
-import menuClose from '../../../images/menu-close.svg';
+import menuClose from '../../images/menu-close.svg';
 
 function SideMenu({ isMenuOpen, handleCloseMenuClick}) {
   const navLinkClassName = (

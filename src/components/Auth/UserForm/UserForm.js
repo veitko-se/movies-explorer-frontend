@@ -5,7 +5,7 @@ import useFormAndValidation from '../../../hooks/useFormAndValidation';
 import Form from '../../Form/Form';
 import './UserForm.css';
 
-function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit }) {
+function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit, isServerError }) {
   const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
   const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
@@ -33,6 +33,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
       isButtonVisible={isButtonVisible}
       values={values} errors={errors} isValid={isValid} handleChange={handleChange}
       handleSubmit={handleSubmit}
+      isServerError={isServerError}
     >
       { !(pathname==='/signin') &&
         <input

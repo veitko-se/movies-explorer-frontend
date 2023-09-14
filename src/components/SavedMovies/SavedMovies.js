@@ -5,7 +5,7 @@ import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import useFormAndValidation from '../../hooks/useFormAndValidation';
 import "./SavedMovies.css";
 
-function SavedMovies({onRemoveMovie, onCheckBox, onFilter, savedMovies, searchText, isShortFilm, isLoading, moviesForRender}) {
+function SavedMovies({onRemoveMovie, onCheckBox, onFilter, searchText, isShortFilm, isLoading, isErrorLoading, moviesAfterFilter, moviesBeforeFfilter}) {
   const {values, errors, isValid, handleChange, setValues} = useFormAndValidation();
 
   useEffect(() => {
@@ -28,9 +28,17 @@ function SavedMovies({onRemoveMovie, onCheckBox, onFilter, savedMovies, searchTe
         values={values} errors={errors} isValid={isValid} handleChange={handleChange}
         searchText={searchText} isShortFilm={isShortFilm}
       />
-      {isLoading
+      { isLoading
         ? <Preloader />
-        : <MoviesCardList movies={moviesForRender} onCardRemove={onRemoveMovie} savedMovies={savedMovies} />
+        : isErrorLoading
+        ? <p className="movies__message">
+            Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз
+          </p>
+        : (moviesAfterFilter.length > 0)
+        ? <MoviesCardList movies={moviesAfterFilter} onCardRemove={onRemoveMovie} savedMovies={moviesBeforeFfilter} />
+        : <p className="movies__message">
+            Ничего не найдено
+          </p>
       }
     </main>
   );

@@ -2,7 +2,7 @@ import { Children } from 'react';
 import SubmitButton from './SubmitButton/SubmitButton';
 import './Form.css';
 
-function Form({ formName, title, children, errors, isValid, isButtonVisible = true, buttonText, handleSubmit }) {
+function Form({ formName, title, children, errors, isValid, isButtonVisible = true, buttonText, handleSubmit, isServerError }) {
   return (
     <>
       <h1 className={`form-title form-title_type_${formName}`}>{title}</h1>
@@ -31,7 +31,7 @@ function Form({ formName, title, children, errors, isValid, isButtonVisible = tr
           })}
 
         </div>
-        <SubmitButton isValid={isValid} isVisible={isButtonVisible} formName={formName}>{buttonText}</SubmitButton>
+        <SubmitButton isValid={isValid} isVisible={isButtonVisible} formName={formName} isServerError={isServerError} >{buttonText}</SubmitButton>
       </form>
     </>
   )

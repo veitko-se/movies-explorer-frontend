@@ -1,4 +1,4 @@
-import HeaderAuthorizedMenu from '../Menu/HeaderAuthorizedMenu/HeaderAuthorizedMenu'; /* важен порядок, иначе не применятся стили */
+import HeaderAuthorizedMenu from './HeaderAuthorizedMenu/HeaderAuthorizedMenu'; /* важен порядок, иначе не применятся стили */
 import './Header.css';
 import headerLogo from '../../images/header-logo.svg';
 import { Link, useLocation } from 'react-router-dom';

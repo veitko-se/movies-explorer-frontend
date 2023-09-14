@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import Menu from '../Menu';
+import Menu from '../../Menu/Menu';
 import './HeaderAuthorizedMenu.css';
 import headerBurgerIcon from '../../../images/header-burger-icon.svg';
 

@@ -7,7 +7,7 @@ import Preloader from "./Preloader/Preloader";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import "./Movies.css";
 
-function Movies({ onCardLike, moviesForRender, savedMovies, searchText, isShortFilm, isLoading, isErrorLoading, onCheckBox, onFilter }) {
+function Movies({ onCardLike, moviesBeforeFfilter, moviesAfterFilter, savedMovies, searchText, isShortFilm, isLoading, isErrorLoading, onCheckBox, onFilter }) {
   const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
   const {width} = useResize();
   const [moviesToShow, setMoviesToShow] = useState([]);
@@ -20,7 +20,7 @@ function Movies({ onCardLike, moviesForRender, savedMovies, searchText, isShortF
 
   useEffect(() => {
     renderMovies();
-  }, [moviesForRender, moviesToShowCounter]);
+  }, [moviesAfterFilter, moviesToShowCounter]);
 
   useEffect(() => {
     const moviesToShowCounter = getMoviesToShowCounter(width);
@@ -44,12 +44,12 @@ function Movies({ onCardLike, moviesForRender, savedMovies, searchText, isShortF
   };
 
   function renderMovies() {
-    const slicedMovies = moviesForRender.slice(0, moviesToShowCounter.initial);
+    const slicedMovies = moviesAfterFilter.slice(0, moviesToShowCounter.initial);
     setMoviesToShow(slicedMovies);
   };
 
   function addMovies(start, end) {
-    const slicedMovies = moviesForRender.slice(start, end);
+    const slicedMovies = moviesAfterFilter.slice(start, end);
     const newMoviesToShow = [...moviesToShow, ...slicedMovies];
     setMoviesToShow(newMoviesToShow);
   };
@@ -67,14 +67,14 @@ function Movies({ onCardLike, moviesForRender, savedMovies, searchText, isShortF
         ? <p className="movies__message">
             Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз
           </p>
-        : (localStorage.getItem('localMovies') === null)
+        : (moviesBeforeFfilter.length === 0)
         ? <p className="movies__message">
             Для поиска нужно ввести ключевое слово
           </p>
-        : (moviesForRender.length > 0)
+        : (moviesAfterFilter.length > 0)
         ? <>
             <MoviesCardList movies={moviesToShow} savedMovies={savedMovies} onCardLike={onCardLike}/>
-            {moviesForRender.length > moviesToShow.length && <button className="button movies__btn" type="button" onClick={handleBtnMoreClick}>Ещё</button>}
+            {moviesAfterFilter.length > moviesToShow.length && <button className="button movies__btn" type="button" onClick={handleBtnMoreClick}>Ещё</button>}
           </>
         : <p className="movies__message">
             Ничего не найдено
