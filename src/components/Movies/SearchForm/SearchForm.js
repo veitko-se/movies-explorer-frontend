@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import { validateSearch } from '../../../utils/validationRules';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import Form from '../../Form/Form';
 import './SearchForm.css';
@@ -10,7 +9,7 @@ function SearchForm({handleSubmit, onCheckBox, values, errors, isValid, handleCh
 
   useEffect(() => {
     if (errors.search) {
-      setCustomError(validateSearch(values.search).error)
+      setCustomError('Нужно ввести ключевое слово')
     } else {
       setCustomError('')
     }

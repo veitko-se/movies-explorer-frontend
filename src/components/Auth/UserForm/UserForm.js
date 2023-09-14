@@ -2,7 +2,6 @@ import { useRef, useEffect, useContext } from 'react';
 import { useLocation } from "react-router-dom";
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
 import useFormAndValidation from '../../../hooks/useFormAndValidation';
-import { validateName, validateEmail } from '../../../utils/validationRules';
 import Form from '../../Form/Form';
 import './UserForm.css';
 
@@ -53,7 +52,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           onChange={handleChange}
           disabled={!isButtonVisible}
           ref={inputRef}
-          customerrortext={validateName(values.name).error}
+          pattern="^[a-zA-Zа-яА-Я\-\s]+$"
         />
       }
 
@@ -71,7 +70,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           value={values.email || ''}
           onChange={handleChange}
           disabled={!isButtonVisible}
-          customerrortext={validateEmail(values.email).error}
+          pattern="^[a-z0-9\._%+\-]+@[a-z0-9\.\-]+\.[a-z]{2,4}$"
         />
 
       { !(pathname==='/profile') &&
