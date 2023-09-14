@@ -5,10 +5,10 @@ function SubmitButton({ children, isValid, isVisible = true, formName, isServerE
   const { pathname } = useLocation();
   return (
     <div className="button-block">
-      { isServerError && <p className="button-block__error">
+      { isServerError && <p className="button-block__message button-block__message_type_error">
         Произошла ошибка сервера.
       </p> }
-      { isServerApplied && pathname==='/profile' && <p className="button-block__message">
+      { isServerApplied && pathname==='/profile' && <p className="button-block__message button-block__message_type_ok">
         Информация успешно обновлена!
       </p> }
       <button
