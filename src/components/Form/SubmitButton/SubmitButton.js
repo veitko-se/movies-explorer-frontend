@@ -6,7 +6,7 @@ function SubmitButton({ children, isValid, isVisible = true, formName, isServerE
   return (
     <div className="button-block">
       { isServerError && <p className="button-block__message button-block__message_type_error">
-        Произошла ошибка сервера.
+        Произошла ошибка. Проверьте введенные данные или попробуйте позже.
       </p> }
       { isServerApplied && pathname==='/profile' && <p className="button-block__message button-block__message_type_ok">
         Информация успешно обновлена!

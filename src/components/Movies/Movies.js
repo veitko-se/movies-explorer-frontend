@@ -8,7 +8,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import "./Movies.css";
 
 function Movies({ onCardLike, moviesBeforeFfilter, moviesAfterFilter, savedMovies, searchText, isShortFilm, isLoading, isErrorLoading, onCheckBox, onFilter }) {
-  const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
+  const { values, errors, isValid, handleChange, setValues, setIsValid } = useFormAndValidation();
   const {width} = useResize();
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [moviesToShowCounter, setMoviesToShowCounter] = useState(() => getMoviesToShowCounter(width));
@@ -58,8 +58,9 @@ function Movies({ onCardLike, moviesBeforeFfilter, moviesAfterFilter, savedMovie
     <main className="movies">
       <SearchForm
         handleSubmit={handleSearchSubmit} onCheckBox={handleIsShortFilmCheckbox}
-        values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+        values={values} errors={errors} isValid={isValid} handleChange={handleChange} setIsValid={setIsValid}
         searchText={searchText} isShortFilm={isShortFilm}
+        isLoading={isLoading}
       />
       { isLoading
         ? <Preloader />

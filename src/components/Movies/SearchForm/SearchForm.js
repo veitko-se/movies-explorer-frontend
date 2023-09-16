@@ -4,7 +4,7 @@ import Form from '../../Form/Form';
 import './SearchForm.css';
 
 
-function SearchForm({handleSubmit, onCheckBox, values, errors, isValid, handleChange, isShortFilm}) {
+function SearchForm({handleSubmit, onCheckBox, values, errors, isValid, setIsValid, handleChange, isShortFilm, isLoading}) {
   const [customError, setCustomError] = useState('');
 
   useEffect(() => {
@@ -20,8 +20,9 @@ function SearchForm({handleSubmit, onCheckBox, values, errors, isValid, handleCh
       <Form
         formName='search'
         title='Поиск фильма' buttonText=''
-        values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+        values={values} errors={errors} isValid={isValid} handleChange={handleChange} setIsValid={setIsValid}
         handleSubmit={handleSubmit}
+        isLoading={isLoading}
       >
         <input
           title=""

@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {SHORT_FILM_DURATION} from '../utils/constants';
 
 function useFilterForMovies(unfilteredMovies, searchText, isShortFilm) {
   const [movies, setMovies] = useState([]);
@@ -14,7 +15,7 @@ function useFilterForMovies(unfilteredMovies, searchText, isShortFilm) {
   }
 
   const filterByCheckbox = (movie) => {
-    return isShortFilm ? movie.duration <= 40 : true;
+    return isShortFilm ? movie.duration <= SHORT_FILM_DURATION : true;
   }
 
   function getFilteredMovies(unfilteredMovies, ...filters) {

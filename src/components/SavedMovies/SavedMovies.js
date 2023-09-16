@@ -6,7 +6,7 @@ import useFormAndValidation from '../../hooks/useFormAndValidation';
 import "./SavedMovies.css";
 
 function SavedMovies({onRemoveMovie, onCheckBox, onFilter, searchText, isShortFilm, isLoading, isErrorLoading, moviesAfterFilter, moviesBeforeFfilter}) {
-  const {values, errors, isValid, handleChange, setValues} = useFormAndValidation();
+  const {values, errors, isValid, handleChange, setValues, setIsValid} = useFormAndValidation();
 
   useEffect(() => {
     setValues({search: searchText});
@@ -25,8 +25,9 @@ function SavedMovies({onRemoveMovie, onCheckBox, onFilter, searchText, isShortFi
     <main className="movies">
       <SearchForm
         handleSubmit={handleSearchSubmit} onCheckBox={handleIsShortFilmCheckbox}
-        values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+        values={values} errors={errors} isValid={isValid} handleChange={handleChange} setIsValid={setIsValid}
         searchText={searchText} isShortFilm={isShortFilm}
+        isLoading={isLoading}
       />
       { isLoading
         ? <Preloader />

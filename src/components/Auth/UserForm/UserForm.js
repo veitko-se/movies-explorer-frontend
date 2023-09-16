@@ -5,21 +5,27 @@ import useFormAndValidation from '../../../hooks/useFormAndValidation';
 import Form from '../../Form/Form';
 import './UserForm.css';
 
-function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmit, isServerError, isServerApplied }) {
+function UserForm({ formName, title, isEditable = true, buttonText, onSubmit, isServerError, isServerApplied, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  const { values, errors, isValid, handleChange, setValues } = useFormAndValidation();
+  const { values, errors, isValid, handleChange, setValues, setIsValid } = useFormAndValidation();
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, [isButtonVisible]);
+  }, [isEditable]);
 
   useEffect(() => {
     if (currentUser && (formName==='profile')) {
       setValues({name: currentUser.name, email: currentUser.email});
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    if ((currentUser.name===values.name)&&(currentUser.email===values.email)) {
+      setIsValid(false);
+    }
+  }, [values]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -30,11 +36,12 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
     <Form
       formName={formName}
       title={title} buttonText={buttonText}
-      isButtonVisible={isButtonVisible}
-      values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+      isButtonVisible={isEditable}
+      values={values} errors={errors} isValid={isValid} handleChange={handleChange} setIsValid={setIsValid}
       handleSubmit={handleSubmit}
       isServerError={isServerError}
       isServerApplied={isServerApplied}
+      isLoading={isLoading}
     >
       { !(pathname==='/signin') &&
         <input
@@ -50,7 +57,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           maxLength="40"
           value={values.name || ''}
           onChange={handleChange}
-          disabled={!isButtonVisible}
+          disabled={!isEditable}
           ref={inputRef}
           pattern="^[a-zA-Zа-яА-Я\-\s]+$"
         />
@@ -69,7 +76,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           maxLength="40"
           value={values.email || ''}
           onChange={handleChange}
-          disabled={!isButtonVisible}
+          disabled={!isEditable}
           pattern="^[a-z0-9\._%+\-]+@[a-z0-9\.\-]+\.[a-z]{2,4}$"
         />
 
@@ -87,6 +94,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText, onSubmi
           maxLength="40"
           value={values.password||''}
           onChange={handleChange}
+          disabled={!isEditable}
         />
       }
     </Form>

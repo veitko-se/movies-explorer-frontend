@@ -3,18 +3,20 @@
  * @param width Ширина экрана
  * @returns {{add: number, initial: number}}
  */
+import { SCREEN, CARDS } from './constants';
+
 function getMoviesToShowCounter(width) {
   switch (true) {
-    case (width < 630):
-      return {initial: 5, add: 2};
-    case (width >= 630 && width < 930):
-      return {initial: 8, add: 2};
-    case (width >= 930 && width < 1280):
-      return {initial: 12, add: 3};
-    case (width >= 1280):
-      return {initial: 16, add: 4};
+    case (width < SCREEN.S):
+      return CARDS.XS;
+    case (width >= SCREEN.S && width < SCREEN.M):
+      return CARDS.S;
+    case (width >= SCREEN.M && width < SCREEN.L):
+      return CARDS.M;
+    case (width >= SCREEN.L):
+      return CARDS.L;
     default:
-      return {initial: 0, add: 0};
+      return CARDS.DEFAULT;
   }
 }
 export default getMoviesToShowCounter;

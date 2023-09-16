@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Route, Routes, Navigate, useNavigate, useLocation} from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRouteAuth from '../ProtectedRoute/ProtectedRouteAuth';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -17,14 +18,14 @@ import MoviesApi from '../../utils/Api/MoviesApi';
 import {CurrentUserContext, user} from '../../contexts/CurrentUserContext';
 import {useLocalStorage} from '../../hooks/useLocalStorage';
 import useFilterForMovies from "../../hooks/useFilterForMovies";
-import { MOVIE_BASE_URL } from '../../utils/constants';
+import {MOVIE_BASE_URL} from '../../utils/constants';
 import './App.css';
 
 function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [currentUser, setCurrentUser] = useState(user.default);
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token')||"" ? true : false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token') ? true : false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isErrorLoading, setIsErrorLoading] = useState(false);
@@ -36,8 +37,8 @@ function App() {
   const [checkboxAllMovies, setCheckboxAllMovies] = useLocalStorage("localCheckboxAllMovies", false);
   const [filteredAllMovies, setFilteredAllMovies] = useFilterForMovies(allMovies, queryAllMovies, checkboxAllMovies);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [querySavedMovies, setQuerySavedMovies] = useLocalStorage("localQuerySavedMovies", "");
-  const [checkboxSavedMovies, setCheckboxSavedMovies] = useLocalStorage("localCheckboxSavedMovies", false)
+  const [querySavedMovies, setQuerySavedMovies] = useState('');
+  const [checkboxSavedMovies, setCheckboxSavedMovies] = useState(false)
   const [filteredSavedMovies, setFilteredSavedMovies] = useFilterForMovies(savedMovies, querySavedMovies, checkboxSavedMovies);
 
   const mainApi = new MainApi({
@@ -58,19 +59,22 @@ function App() {
   const authApi = new AuthApi('https://api.bitfilms.veitko-se.nomoredomains.xyz');
 
   useEffect(() => {
-    if (isLoggedIn) {
-      handleLoadingData()
-    } else {
-      handleTokenCheck()
-    }
-  }, [isLoggedIn, pathname]);
+    handleTokenCheck();
+  }, []);
+
+  useEffect(() => {
+    isLoggedIn && handleLoadingData();
+  }, [isLoggedIn]);
 
   useEffect(() => {
     isEditable && setIsServerApplied(false)
   }, [isEditable]);
 
   useEffect(() => {
-    setIsServerApplied(false)
+    setIsServerApplied(false);
+    setIsAuthError(false);
+    setQuerySavedMovies('');
+    setCheckboxSavedMovies(false);
   }, [pathname]);
 
   function handleTokenCheck() {
@@ -175,6 +179,7 @@ function App() {
   };
 
   function onRegister(name, email, password) {
+    setIsLoading(true);
     authApi.register(name, email, password)
     .then(() => {
       onLogin(name, email, password);
@@ -182,10 +187,12 @@ function App() {
     .catch(err => {
       setIsAuthError(true);
       console.log(`Ошибка: ${err}`);
-    });
+    })
+    .finally(() => setIsLoading(false));;
   };
 
   function onLogin(name, email, password) {
+    setIsLoading(true);
     authApi.authorize(email, password)
     .then((data) => {
       if (data.token){
@@ -198,6 +205,7 @@ function App() {
       setIsAuthError(true);
       console.log(`Ошибка: ${err}`);
     })
+    .finally(() => setIsLoading(false));
   };
 
   function onSignOut(){
@@ -213,6 +221,7 @@ function App() {
   };
 
   function onSaveUserInfo(name, email, password) {
+    setIsLoading(true);
     mainApi.updateUserInfo({name, email})
     .then((userInfo) => {
       setCurrentUser(userInfo);
@@ -225,6 +234,7 @@ function App() {
       setIsServerApplied(false);
       console.log(`Ошибка: ${err}`);
     })
+    .finally(() => setIsLoading(false));
   };
 
   return (
@@ -235,17 +245,32 @@ function App() {
         <Routes>
           <Route path="*" element={<Navigate to="/404" replace/>}/>
           <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Register onRegister={onRegister} isServerError={isAuthError} />} />
-          <Route path="/signin" element={<Login onLogin={onLogin} isServerError={isAuthError} />} />
+          <Route path="/signup" element={
+            <ProtectedRouteAuth element={Register}
+              isLoggedIn={isLoggedIn}
+              onRegister={onRegister}
+              isServerError={isAuthError}
+              isLoading={isLoading}
+            />
+          } />
+          <Route path="/signin" element={
+            <ProtectedRouteAuth element={Login}
+              isLoggedIn={isLoggedIn}
+              onLogin={onLogin}
+              isServerError={isAuthError}
+              isLoading={isLoading}
+            />
+          } />
           <Route path="/profile" element={
             <ProtectedRoute element={Profile}
-            isLoggedIn={isLoggedIn}
-            onSignOut={onSignOut}
-            onEdit={onEditUserInfo}
-            onSave={onSaveUserInfo}
-            isEditable={isEditable}
-            isServerError={isAuthError}
-            isServerApplied={isServerApplied}
+              isLoggedIn={isLoggedIn}
+              onSignOut={onSignOut}
+              onEdit={onEditUserInfo}
+              onSave={onSaveUserInfo}
+              isEditable={isEditable}
+              isServerError={isAuthError}
+              isServerApplied={isServerApplied}
+              isLoading={isLoading}
             />
           } />
           <Route path="/movies" element={

@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { Children } from 'react';
 import SubmitButton from './SubmitButton/SubmitButton';
 import './Form.css';
 
-function Form({ formName, title, children, errors, isValid, isButtonVisible = true, buttonText, handleSubmit, isServerError, isServerApplied }) {
+function Form({ formName, title, children, errors, isValid, isButtonVisible = true, buttonText, handleSubmit, isServerError, isServerApplied, isLoading, setIsValid }) {
+  useEffect(() => {
+    isLoading && setIsValid(false);
+  }, [isLoading]);
+
   return (
     <>
       <h1 className={`form-title form-title_type_${formName}`}>{title}</h1>
