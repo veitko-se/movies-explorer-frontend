@@ -1,28 +1,51 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import { useLocation } from "react-router-dom";
-import Form from '../../Form/Form';
+import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
 import useFormAndValidation from '../../../hooks/useFormAndValidation';
+import Form from '../../Form/Form';
 import './UserForm.css';
 
-
-function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
+function UserForm({ formName, title, isEditable = true, buttonText, onSubmit, isServerError, isServerApplied, isLoading }) {
+  const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  const { values, errors, isValid, handleChange } = useFormAndValidation();
+  const { values, errors, isValid, handleChange, setValues, setIsValid } = useFormAndValidation();
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, [isButtonVisible]);
+  }, [isEditable]);
+
+  useEffect(() => {
+    if (currentUser && (formName==='profile')) {
+      setValues({name: currentUser.name, email: currentUser.email});
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if ((currentUser.name===values.name)&&(currentUser.email===values.email)) {
+      setIsValid(false);
+    }
+  }, [values]);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onSubmit(values.name, values.email, values.password);
+  };
 
   return (
     <Form
       formName={formName}
       title={title} buttonText={buttonText}
-      isButtonVisible={isButtonVisible}
-      values={values} errors={errors} isValid={isValid} handleChange={handleChange}
+      isButtonVisible={isEditable}
+      values={values} errors={errors} isValid={isValid} handleChange={handleChange} setIsValid={setIsValid}
+      handleSubmit={handleSubmit}
+      isServerError={isServerError}
+      isServerApplied={isServerApplied}
+      isLoading={isLoading}
     >
       { !(pathname==='/signin') &&
         <input
+          title="Имя"
           aria-label="Имя"
           name="name"
           type="text"
@@ -34,12 +57,14 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
           maxLength="40"
           value={values.name || ''}
           onChange={handleChange}
-          disabled={!isButtonVisible}
+          disabled={!isEditable}
           ref={inputRef}
+          pattern="^[a-zA-Zа-яА-Я\-\s]+$"
         />
       }
 
         <input
+          title="E-mail"
           aria-label="E-mail"
           name="email"
           type="email"
@@ -51,11 +76,13 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
           maxLength="40"
           value={values.email || ''}
           onChange={handleChange}
-          disabled={!isButtonVisible}
+          disabled={!isEditable}
+          pattern="^[a-z0-9\._%+\-]+@[a-z0-9\.\-]+\.[a-z]{2,4}$"
         />
 
       { !(pathname==='/profile') &&
         <input
+          title="Пароль"
           aria-label="Пароль"
           type="password"
           className={`form__input form__input_type_${formName} ${errors.password&&'form__input_type_error'}`}
@@ -67,6 +94,7 @@ function UserForm({ formName, title, isButtonVisible = true, buttonText }) {
           maxLength="40"
           value={values.password||''}
           onChange={handleChange}
+          disabled={!isEditable}
         />
       }
     </Form>

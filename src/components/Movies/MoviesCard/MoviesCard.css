@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   background-color: #222;
   filter: drop-shadow(0px 16px 24px rgba(0, 0, 0, 0.05));
   border-radius: 10px;
@@ -17,6 +18,7 @@
   width: 100%;
   box-sizing: border-box;
   height: 67px;
+  gap: 24px;
 }
 
 .movies-card__text-block {
@@ -25,6 +27,7 @@
   flex-direction: column;
   gap: 10px;
   justify-content: space-between;
+  max-width: calc(100% - 24px - 16px);
 }
 
 .movies-card__title {
@@ -33,6 +36,9 @@
   line-height: 1.2;
   margin: 0;
   padding: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .movies-card__duration {

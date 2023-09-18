@@ -1,10 +1,14 @@
 import {useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import Menu from '../Menu';
+import { NavLink } from 'react-router-dom';
+import Menu from '../Menu/Menu';
 import './SideMenu.css';
-import menuClose from '../../../images/menu-close.svg';
+import menuClose from '../../images/menu-close.svg';
 
-function SideMenu({ isMenuOpen, handleCloseMenuClick }) {
+function SideMenu({ isMenuOpen, handleCloseMenuClick}) {
+  const navLinkClassName = (
+    ({ isActive }) => isActive? 'menu__item menu__item_type_side link link_highlighted': 'menu__item menu__item_type_side link'
+  );
+
   useEffect(() => {
     handleShowScroll();
   }, [isMenuOpen]);
@@ -20,10 +24,10 @@ function SideMenu({ isMenuOpen, handleCloseMenuClick }) {
         <button className="menu-block__close-btn button" onClick={handleCloseMenuClick} type="button">
           <img src={menuClose} alt="Закрыть" className="menu-block__close-icon" />
         </button>
-        <Menu name='side' color='black'>
-          <li><Link to="/" className="menu__item menu__item_type_side link">Главная</Link></li>
-          <li><Link to="/movies" className="menu__item menu__item_type_side link link_highlighted">Фильмы</Link></li>
-          <li><Link to="/saved-movies" className="menu__item menu__item_type_side link">Сохранённые фильмы</Link></li>
+        <Menu name='side' color='black' onAccountClick={handleCloseMenuClick}>
+          <li><NavLink to="/" className={navLinkClassName} onClick={handleCloseMenuClick}>Главная</NavLink></li>
+          <li><NavLink to="/movies" className={navLinkClassName} onClick={handleCloseMenuClick}>Фильмы</NavLink></li>
+          <li><NavLink to="/saved-movies" className={navLinkClassName} onClick={handleCloseMenuClick}>Сохранённые фильмы</NavLink></li>
         </Menu>
       </div>
     </section>
